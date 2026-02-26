@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "build:vercel": "tsup && mkdir -p public && cp *.html zenith_logo.png public/ 2>/dev/null || true",
     "dev": "tsx watch src/index.ts",
     "start": "tsx src/index.ts",
     "start:built": "node dist/index.js",
