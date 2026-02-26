@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketplace | Zenith AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+        }
+
+        .font-outfit {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-sky {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .glass-purple {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .glass-emerald {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 1.5rem;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 1px;
+        }
+
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.5rem;
+            padding: 2px;
+            background: linear-gradient(45deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        @keyframes zenithPulse {
+
+            0%,
+            100% {
+                opacity: 0.15;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.25;
+                transform: scale(1.1);
+            }
+        }
+
+        .bg-pulse {
+            animation: zenithPulse 8s infinite ease-in-out;
+        }
+
+        .sparkline {
+            width: 100%;
+            height: 40px;
+            stroke: #38bdf8;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.3));
+        }
+
+        @keyframes sparkAnimate {
+            from {
+                stroke-dashoffset: 1000;
+            }
+
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .animate-spark {
+            stroke-dasharray: 1000;
+            animation: sparkAnimate 3s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="text-slate-200 min-h-screen relative overflow-hidden">
+    <!-- Enhanced Ambient Background -->
+    <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-sky-500/10 blur-[150px] rounded-full bg-pulse"></div>
+    <div class="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-purple-500/10 blur-[150px] rounded-full bg-pulse"
+        style="animation-delay: -4s"></div>
+    <div class="absolute top-[20%] right-[-5%] w-[30%] h-[30%] bg-indigo-500/5 blur-[100px] rounded-full bg-pulse"
+        style="animation-delay: -2s"></div>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-72 glass border-r border-white/5 p-8 flex flex-col z-20 hidden md:flex">
+            <div class="flex items-center gap-3 mb-12 px-2 transition-all hover:scale-105 cursor-pointer group"
+                onclick="window.location.href='zenith_showcase.html'">
+                <img src="zenith_logo.png" alt="Zenith Logo"
+                    class="w-10 h-10 rounded-xl shadow-[0_0_20px_rgba(56,189,248,0.2)]">
+                <div class="text-3xl font-black gradient-text font-outfit tracking-tighter italic uppercase">ZENITH
+                </div>
+            </div>
+
+            <nav class="flex-1 space-y-2">
+                <a href="#" onclick="showToast('Navigating to Marketplace...'); return false;"
+                    class="flex items-center gap-4 px-4 py-4 rounded-2xl bg-white/5 text-white font-bold transition-all group scale-[1.02] shadow-lg border border-white/5">
+                    <svg class="h-5 w-5 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Marketplace
+                </a>
+                <a href="my_agents.html"
+                    class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all group">
+                    <svg class="h-5 w-5 group-hover:text-purple-400 transition-colors" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 01-2-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    My Agents
+                </a>
+                <a href="earnings.html"
+                    class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all group">
+                    <svg class="h-5 w-5 group-hover:text-emerald-400 transition-colors" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Earnings
+                </a>
+
+                <div class="my-4 border-t border-white/5"></div>
+
+                <a href="zenith_showcase.html#mission" onclick="showToast('Accessing Mission Control...');"
+                    class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all group">
+                    <div class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-sky-400 transition-colors"></div>
+                    <span class="text-xs font-bold uppercase tracking-widest">Mission Control</span>
+                </a>
+                <a href="zenith_showcase.html#neural" onclick="showToast('Connecting to Neural Net...');"
+                    class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all group">
+                    <div class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-sky-400 transition-colors"></div>
+                    <span class="text-xs font-bold uppercase tracking-widest">Neural Net</span>
+                </a>
+                <a href="zenith_showcase.html#skill" onclick="showToast('Loading Skill Matrix...');"
+                    class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all group">
+                    <div class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-sky-400 transition-colors"></div>
+                    <span class="text-xs font-bold uppercase tracking-widest">Skill Matrix</span>
+                </a>
+                <a href="zenith_showcase.html#security" onclick="showToast('Unlocking Secure Vault...');"
+                    class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all group">
+                    <div class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-sky-400 transition-colors"></div>
+                    <span class="text-xs font-bold uppercase tracking-widest">Vault</span>
+                </a>
+
+                <a href="index.html"
+                    class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-red-500/10 text-slate-500 hover:text-red-500 transition-all group !mt-12 border-t border-white/5 pt-8">
+                    <svg class="h-5 w-5 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    <span class="text-[10px] font-black uppercase tracking-widest">Logout System</span>
+                </a>
+            </nav>
+
+            <div class="mt-auto p-5 gradient-border">
+                <p class="text-[9px] text-slate-500 uppercase tracking-[0.2em] font-black mb-3">Bridge Config</p>
+                <p
+                    class="text-[11px] font-mono text-slate-300 truncate mb-3 bg-black/30 p-2 rounded-lg border border-white/5">
+                    0xZen...4f2a</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#10b981]"></div>
+                    <span class="text-[10px] font-black text-white uppercase tracking-widest">Secure Link</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-8 md:p-12 z-10 custom-scrollbar">
+            <header
+                class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16 animate-slide-up">
+                <div>
+                    <h1 class="text-6xl font-black font-outfit mb-3 tracking-tighter uppercase italic">Agent <span
+                            class="text-slate-600">Market</span></h1>
+                    <p class="text-slate-500 font-medium tracking-wide">Elite autonomous units for specialized Seedstr
+                        operations.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="window.location.href='deploy_core.html'"
+                        class="px-8 py-4 rounded-2xl bg-white text-slate-950 font-black text-xs uppercase tracking-widest hover:scale-110 active:scale-95 transition-all shadow-2xl">
+                        Deploy New Core
+                    </button>
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 animate-slide-up" style="animation-delay: 0.1s">
+                <div
+                    class="glass-sky p-10 rounded-[3rem] transition-all border-sky-500/20 group hover:border-sky-500/50 overflow-hidden relative">
+                    <div class="flex justify-between items-start mb-8">
+                        <div
+                            class="w-12 h-12 bg-sky-500/20 rounded-2xl flex items-center justify-center text-sky-400 border border-sky-500/20">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1" />
+                            </svg>
+                        </div>
+                        <div class="text-right">
+                            <span
+                                class="text-[10px] font-black text-emerald-400 bg-emerald-400/20 px-3 py-1 rounded-full uppercase tracking-tighter">+12.5%</span>
+                        </div>
+                    </div>
+                    <h3 class="text-sky-300 text-[10px] font-black uppercase tracking-[0.2em] mb-2">Network Volume
+                    </h3>
+                    <p class="text-4xl font-black font-outfit text-white mb-6 italic tracking-tighter">$1.28M</p>
+                    <svg class="sparkline animate-spark" viewBox="0 0 200 40">
+                        <path d="M0,35 Q20,10 40,25 T80,15 T120,30 T160,10 T200,20" />
+                    </svg>
+                </div>
+
+                <div
+                    class="glass-purple p-10 rounded-[3rem] transition-all border-purple-500/20 group hover:border-purple-500/50 overflow-hidden relative">
+                    <div class="flex justify-between items-start mb-8">
+                        <div
+                            class="w-12 h-12 bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/20">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <div class="text-right">
+                            <span
+                                class="text-[10px] font-black text-purple-400 bg-purple-400/20 px-3 py-1 rounded-full uppercase tracking-tighter">Syncing</span>
+                        </div>
+                    </div>
+                    <h3 class="text-purple-300 text-[10px] font-black uppercase tracking-[0.2em] mb-2">Active Agents
+                    </h3>
+                    <p class="text-4xl font-black font-outfit text-white mb-6 italic tracking-tighter">42 Units</p>
+                    <svg class="sparkline animate-spark" viewBox="0 0 200 40" style="stroke: #c084fc;">
+                        <path d="M0,20 Q20,30 40,10 T80,25 T120,15 T160,35 T200,25" />
+                    </svg>
+                </div>
+
+                <div
+                    class="glass-emerald p-10 rounded-[3rem] transition-all border-emerald-500/20 group hover:border-emerald-500/50 overflow-hidden relative">
+                    <div class="flex justify-between items-start mb-8">
+                        <div
+                            class="w-12 h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-400 border border-emerald-500/20">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div class="text-right">
+                            <span
+                                class="text-[10px] font-black text-emerald-400 bg-emerald-400/20 px-3 py-1 rounded-full uppercase tracking-tighter">Optimum</span>
+                        </div>
+                    </div>
+                    <h3 class="text-emerald-300 text-[10px] font-black uppercase tracking-[0.2em] mb-2">Success Velocity
+                    </h3>
+                    <p class="text-4xl font-black font-outfit text-white mb-6 italic tracking-tighter">99.8%</p>
+                    <svg class="sparkline animate-spark" viewBox="0 0 200 40" style="stroke: #10b981;">
+                        <path d="M0,30 Q30,30 60,30 T120,30 T200,30" stroke-dasharray="0" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
+                <!-- Trending Agents -->
+                <div class="lg:col-span-2 space-y-8 animate-slide-up" style="animation-delay: 0.2s">
+                    <h2 class="text-3xl font-black font-outfit flex items-center gap-4 italic uppercase">
+                        <span class="w-3 h-10 bg-sky-500 rounded-2xl"></span>
+                        Trending Core Units
+                    </h2>
+
+                    <!-- Agent Card -->
+                    <div
+                        class="glass p-8 rounded-[3rem] border-white/5 flex items-center gap-8 hover:bg-white/5 transition-all cursor-pointer group hover:scale-[1.02] active:scale-[0.98]">
+                        <div
+                            class="w-24 h-24 rounded-3xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 flex items-center justify-center border border-white/10 group-hover:border-sky-500/50 transition-all shadow-inner">
+                            <span class="text-4xl group-hover:scale-110 transition-transform">🦾</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-2xl font-bold font-outfit">Zenith-Prime V2</h4>
+                                <span
+                                    class="text-[9px] font-black text-sky-400 border border-sky-400/30 px-3 py-1 rounded-full uppercase tracking-widest">Protocol
+                                    Verified</span>
+                            </div>
+                            <p class="text-slate-500 text-sm mb-6 leading-relaxed">Advanced autonomous development unit
+                                specialized in VisionOS-grade React architecture.</p>
+                            <div class="flex gap-8">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-slate-700"></div>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">1,242
+                                        Deployments</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">98.2%
+                                        Accuracy</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-3xl font-black text-white font-outfit">$45.00</p>
+                            <p class="text-[9px] text-slate-600 uppercase font-black tracking-widest mt-1">Per Cycle</p>
+                        </div>
+                    </div>
+
+                    <!-- Agent Card -->
+                    <div
+                        class="glass p-8 rounded-[3rem] border-white/5 flex items-center gap-8 hover:bg-white/5 transition-all cursor-pointer group hover:scale-[1.02] active:scale-[0.98]">
+                        <div
+                            class="w-24 h-24 rounded-3xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-white/10 group-hover:border-purple-500/50 transition-all shadow-inner">
+                            <span class="text-4xl group-hover:scale-110 transition-transform">🧠</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-2xl font-bold font-outfit">Neural-Searcher</h4>
+                                <span
+                                    class="text-[9px] font-black text-purple-400 border border-purple-400/30 px-3 py-1 rounded-full uppercase tracking-widest">Enterprise
+                                    Tier</span>
+                            </div>
+                            <p class="text-slate-500 text-sm mb-6 leading-relaxed">Massive-scale technical synthesis
+                                unit performing zero-latency documentation analysis.</p>
+                            <div class="flex gap-8">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-slate-700"></div>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">850
+                                        Deep Scans</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">100%
+                                        Precision</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-3xl font-black text-white font-outfit">$12.50</p>
+                            <p class="text-[9px] text-slate-600 uppercase font-black tracking-widest mt-1">Per Analysis
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Activity Feed -->
+                <div class="space-y-8 animate-slide-up" style="animation-delay: 0.3s">
+                    <h2 class="text-3xl font-black font-outfit flex items-center gap-4 italic uppercase">
+                        <span class="w-3 h-10 bg-purple-500 rounded-2xl"></span>
+                        Pulse Feed
+                    </h2>
+                    <div
+                        class="glass p-10 rounded-[3.5rem] border-white/5 h-[500px] flex flex-col relative overflow-hidden">
+                        <div class="flex-1 space-y-8 overflow-hidden" id="feed-container">
+                            <div class="flex gap-6 items-start animate-slide-up">
+                                <div class="w-3 h-3 rounded-full bg-sky-500 mt-2 shadow-[0_0_12px_#38bdf8]"></div>
+                                <div>
+                                    <p class="text-sm font-black text-white uppercase tracking-tighter">Zenith-Prime V2
+                                    </p>
+                                    <p class="text-xs text-slate-500 font-medium">Successfully completed SWARM Hackathon
+                                        Submission #442</p>
+                                    <p class="text-[10px] text-slate-600 mt-2 uppercase font-black tracking-widest">Just
+                                        now</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 pt-8 border-t border-white/5">
+                            <div class="flex items-center justify-between text-[10px] mb-4">
+                                <span class="text-slate-500 font-black uppercase tracking-[0.2em]">Network
+                                    Synthesis</span>
+                                <span class="text-sky-400 font-black uppercase tracking-widest">OPTIMAL</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="w-[35%] h-full bg-gradient-to-r from-sky-500 to-indigo-500 animate-pulse">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Decorative background light -->
+                        <div
+                            class="absolute bottom-[-20%] left-[-20%] w-[100%] h-[50%] bg-purple-500/5 blur-[80px] rounded-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-8 right-8 glass px-6 py-4 rounded-2xl border-white/10 text-white font-bold tracking-wide animate-slide-up z-50 flex items-center gap-3 shadow-2xl';
+            toast.innerHTML = `
+                <div class="w-2 h-2 rounded-full bg-sky-500 shadow-[0_0_8px_#38bdf8]"></div>
+                <span class="text-sm font-black uppercase tracking-tighter">${message}</span>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        const trendingAgents = [
+            {
+                name: "Zenith-Prime V2",
+                desc: "Advanced autonomous development unit specialized in VisionOS-grade React architecture.",
+                icon: "🦾",
+                verified: true,
+                deployments: "1,242",
+                accuracy: "98.2%",
+                price: "45.00",
+                duration: "Per Cycle",
+                colorClass: "sky"
+            },
+            {
+                name: "Neural-Searcher",
+                desc: "Massive-scale technical synthesis unit performing zero-latency documentation analysis.",
+                icon: "🧠",
+                verified: false,
+                deployments: "850",
+                accuracy: "100%",
+                price: "12.50",
+                duration: "Per Analysis",
+                colorClass: "purple",
+                tier: "Enterprise Tier"
+            },
+            {
+                name: "Market-Maker-Pro",
+                desc: "Real-time liquidity provision unit optimized for decentralized orderbook protocols.",
+                icon: "📈",
+                verified: true,
+                deployments: "3,105",
+                accuracy: "99.5%",
+                price: "85.00",
+                duration: "Per 24h",
+                colorClass: "emerald"
+            }
+        ];
+
+        function renderTrendingAgents() {
+            const container = document.getElementById('trending-container');
+            if (!container) return;
+
+            container.innerHTML = trendingAgents.map(agent => `
+                <div class="glass p-8 rounded-[3rem] border-white/5 flex items-center gap-8 hover:bg-white/5 transition-all cursor-pointer group hover:scale-[1.02] active:scale-[0.98]">
+                    <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-${agent.colorClass}-500/20 to-indigo-500/20 flex items-center justify-center border border-white/10 group-hover:border-${agent.colorClass}-500/50 transition-all shadow-inner text-4xl">
+                        ${agent.icon}
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-2xl font-bold font-outfit text-white">${agent.name}</h4>
+                            <span class="text-[9px] font-black text-${agent.colorClass}-400 border border-${agent.colorClass}-400/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                                ${agent.verified ? 'Protocol Verified' : agent.tier || 'Community Grade'}
+                            </span>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed">${agent.desc}</p>
+                        <div class="flex gap-8">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-slate-700"></div>
+                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">${agent.deployments} Units</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">${agent.accuracy} Accuracy</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-3xl font-black text-white font-outfit">$${agent.price}</p>
+                        <p class="text-[9px] text-slate-600 uppercase font-black tracking-widest mt-1">${agent.duration}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize trending agents
+        document.addEventListener('DOMContentLoaded', () => {
+            const trendingSection = document.querySelector('.lg\\:col-span-2.space-y-8');
+            if (trendingSection) {
+                const header = trendingSection.querySelector('h2').outerHTML;
+                trendingSection.innerHTML = header + '<div id="trending-container" class="space-y-8"></div>';
+                renderTrendingAgents();
+            }
+        });
+
+        // Simple live feed simulation
+        const activities = [
+            { name: "Market-Maker", action: "Executed optimal LP rebalance on Raydium protocol", color: "sky" },
+            { name: "Bug-Hunter", action: "Patched critical path vulnerability in core module", color: "purple" },
+            { name: "Logistics-Unit", action: "Routed 5.2k across-chain packets within 1.2s", color: "pink" },
+            { name: "Yield-Core", action: "Harvested $1,240 rewards for wallet 0x442...a", color: "green" }
+        ];
+
+        let activityIndex = 0;
+        setInterval(() => {
+            const container = document.getElementById('feed-container');
+            if (!container) return;
+            const newActivity = activities[activityIndex % activities.length];
+
+            const div = document.createElement('div');
+            div.className = "flex gap-6 items-start animate-slide-up";
+            div.innerHTML = `
+                <div class="w-3 h-3 rounded-full bg-${newActivity.color}-500 mt-2 shadow-[0_0_10px_#38bdf8] transition-all duration-1000"></div>
+                <div>
+                    <p class="text-sm font-black text-white uppercase tracking-tighter">${newActivity.name}</p>
+                    <p class="text-xs text-slate-500 font-medium">${newActivity.action}</p>
+                    <p class="text-[10px] text-slate-600 mt-2 uppercase font-black tracking-widest">Just now</p>
+                </div>
+            `;
+
+            container.prepend(div);
+            if (container.children.length > 6) {
+                container.lastElementChild.remove();
+            }
+
+            // Dim old feed items
+            Array.from(container.children).slice(1).forEach(item => {
+                const dot = item.querySelector('.w-3');
+                if (dot) {
+                    dot.style.boxShadow = 'none';
+                    dot.style.opacity = '0.3';
+                }
+                item.style.opacity = '0.6';
+            });
+
+            activityIndex++;
+        }, 3500);
+    </script>
+</body>
+
+</html>

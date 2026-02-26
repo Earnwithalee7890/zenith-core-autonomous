@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zenith AI | Showcasing Excellence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+        }
+
+        .font-outfit {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-sky {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .glass-purple {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .glass-emerald {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .glass-pink {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(236, 72, 153, 0.15);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 1.5rem;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 1px;
+        }
+
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.5rem;
+            padding: 2px;
+            background: linear-gradient(45deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        @keyframes zenithPulse {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(1.05);
+            }
+        }
+
+        .pulse-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, #38bdf8 0%, transparent 70%);
+            opacity: 0.1;
+            animation: zenithPulse 6s infinite ease-in-out;
+            pointer-events: none;
+            will-change: transform, opacity;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Silicon Terminal Look */
+        #log-container {
+            font-family: 'ui-monospace', 'SFMono-Regular', Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            position: relative;
+        }
+
+        .terminal-line {
+            border-left: 2px solid #38bdf8;
+            padding-left: 1rem;
+            margin-bottom: 0.75rem;
+            opacity: 0;
+            animation: terminalAppear 0.3s forwards;
+        }
+
+        @keyframes terminalAppear {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Particle Canvas */
+        #neural-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .neural-overlay {
+            position: relative;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Progress Bars for Skills */
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+
+<body class="bg-[#020617] text-slate-200 min-h-screen relative overflow-hidden font-inter">
+    <div class="pulse-overlay"></div>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-72 glass border-r border-white/5 p-8 flex flex-col z-10 transition-all duration-300">
+            <div class="flex items-center gap-3 mb-12">
+                <img src="zenith_logo.png" alt="Zenith Logo"
+                    class="w-10 h-10 rounded-xl shadow-[0_0_25px_rgba(56,189,248,0.3)]">
+                <div class="text-3xl font-black gradient-text font-outfit tracking-tighter italic uppercase">ZENITH
+                </div>
+            </div>
+
+            <nav id="sidebar-nav" class="flex-1 space-y-3">
+                <div onclick="showTab('mission'); showToast('Accessing Mission Control...');"
+                    class="nav-item flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-all cursor-pointer group"
+                    data-tab="mission">
+                    <div class="dot w-2 h-2 rounded-full bg-slate-700 group-hover:bg-sky-400 transition-colors"></div>
+                    <span
+                        class="text-sm font-bold text-slate-400 group-hover:text-white uppercase tracking-widest">Mission
+                        Control</span>
+                </div>
+                <div onclick="showTab('neural'); showToast('Connecting to Neural Net...');"
+                    class="nav-item flex items-center gap-4 p-4 rounded-2xl bg-white/5 transition-all cursor-pointer group"
+                    data-tab="neural">
+                    <div class="dot w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_#38bdf8]"></div>
+                    <span class="text-sm font-bold text-white uppercase tracking-widest">Neural
+                        Net</span>
+                </div>
+                <div onclick="showTab('skill'); showToast('Loading Skill Matrix...');"
+                    class="nav-item flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-all cursor-pointer group"
+                    data-tab="skill">
+                    <div class="dot w-2 h-2 rounded-full bg-slate-700 group-hover:bg-sky-400 transition-colors"></div>
+                    <span
+                        class="text-sm font-bold text-slate-400 group-hover:text-white uppercase tracking-widest">Skill
+                        Matrix</span>
+                </div>
+                <div onclick="showTab('security'); showToast('Unlocking Secure Vault...');"
+                    class="nav-item flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-all cursor-pointer group"
+                    data-tab="security">
+                    <div class="dot w-2 h-2 rounded-full bg-slate-700 group-hover:bg-sky-400 transition-colors"></div>
+                    <span
+                        class="text-sm font-bold text-slate-400 group-hover:text-white uppercase tracking-widest">Vault</span>
+                </div>
+
+                <a href="marketplace_dashboard.html"
+                    class="nav-item flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-all cursor-pointer group"
+                    data-tab="marketplace">
+                    <div class="dot w-2 h-2 rounded-full bg-slate-700 group-hover:bg-purple-400 transition-colors">
+                    </div>
+                    <span
+                        class="text-sm font-bold text-slate-400 group-hover:text-white uppercase tracking-widest">Marketplace</span>
+                </a>
+
+                <a href="index.html"
+                    class="flex items-center gap-4 p-4 rounded-2xl hover:bg-red-500/10 transition-all cursor-pointer group !mt-12 border-t border-white/5 pt-8">
+                    <div class="dot w-2 h-2 rounded-full bg-slate-700 group-hover:bg-red-500 transition-colors"></div>
+                    <span
+                        class="text-[10px] font-black text-slate-500 group-hover:text-red-500 uppercase tracking-[0.2em]">Terminate
+                        Session</span>
+                </a>
+            </nav>
+
+            <div class="mt-auto p-4 gradient-border">
+                <p class="text-[9px] text-slate-500 uppercase tracking-[0.3em] font-black mb-3 text-center">Engine
+                    Heartbeat</p>
+                <div class="flex items-center justify-center gap-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]"></div>
+                    <span class="text-[11px] font-black text-white uppercase tracking-tighter">ZENITH-V2 ACTIVE</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-12 z-10 custom-scrollbar">
+
+            <!-- Dynamic Identity Bar (Backend Linked) -->
+            <div class="flex items-center justify-between mb-12 p-6 glass rounded-[2.5rem] border-white/10">
+                <div class="flex items-center gap-6">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-2xl font-black text-white shadow-lg">
+                        <span id="name-initial">A</span>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-black font-outfit uppercase tracking-tighter agent-name">ARCHITECT-01
+                        </h2>
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Platform Sync
+                                Active</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-12 items-center">
+                    <div class="text-center">
+                        <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Reputation</p>
+                        <p class="text-xl font-black text-white font-outfit" id="global-reputation">850</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Total Earnings
+                        </p>
+                        <p class="text-xl font-black text-emerald-400 font-outfit" id="global-earnings">$12,450.75</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Jobs Completed
+                        </p>
+                        <p class="text-xl font-black text-sky-400 font-outfit" id="global-jobs">42</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission Control Tab -->
+            <div id="mission" class="tab-content">
+                <header class="flex justify-between items-start mb-16">
+                    <div>
+                        <h1 class="text-6xl font-black font-outfit mb-3 tracking-tighter">ZENITH <span
+                                class="text-slate-600 italic">CORE</span></h1>
+                        <p class="text-slate-500 font-medium tracking-wide">Autonomous mission control for elite agentic
+                            operations.</p>
+                    </div>
+                    <div class="text-right flex flex-col items-end gap-4">
+                        <div class="bg-white/5 p-4 rounded-3xl border border-white/10">
+                            <p class="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] mb-1">Target
+                                Bounty</p>
+                            <p class="text-2xl font-black text-sky-400 font-outfit">$10,000.00</p>
+                        </div>
+                        <button onclick="window.location.href='marketplace_dashboard.html'"
+                            class="px-8 py-3 rounded-2xl bg-white text-slate-950 font-black text-xs uppercase tracking-widest hover:scale-110 active:scale-95 transition-all shadow-xl">
+                            Enter Marketplace
+                        </button>
+                    </div>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="glass p-8 rounded-[2.5rem] relative group hover:border-sky-500/30 transition-all">
+                        <div class="text-sky-500 mb-4">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-4">Functional
+                            Integrity</h3>
+                        <p class="text-4xl font-black font-outfit text-white">100%</p>
+                        <div
+                            class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-sky-500 to-transparent w-full opacity-30">
+                        </div>
+                    </div>
+                    <div class="glass p-8 rounded-[2.5rem] relative group hover:border-indigo-500/30 transition-all">
+                        <div class="text-indigo-500 mb-4">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-4">Design
+                            Supremacy</h3>
+                        <p class="text-4xl font-black font-outfit text-white">10.0<span
+                                class="text-slate-600 text-lg">/10</span></p>
+                        <div
+                            class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-indigo-500 to-transparent w-full opacity-30">
+                        </div>
+                    </div>
+                    <div class="glass p-8 rounded-[2.5rem] relative group hover:border-purple-500/30 transition-all">
+                        <div class="text-purple-500 mb-4">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-4">Neural
+                            Velocity</h3>
+                        <p class="text-4xl font-black font-outfit text-white">1.2<span
+                                class="text-slate-600 text-lg">ms</span></p>
+                        <div
+                            class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-transparent w-full opacity-30">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-12 rounded-[3.5rem] min-h-[450px] relative overflow-hidden border-white/5">
+                    <div class="flex items-center justify-between mb-10">
+                        <h2 class="text-2xl font-bold font-outfit flex items-center gap-3">
+                            <span class="w-3 h-3 rounded-full bg-sky-500"></span>
+                            Live Intelligence Stream
+                        </h2>
+                        <div
+                            class="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                            Real-time Logs
+                        </div>
+                    </div>
+                    <div class="space-y-4" id="log-container">
+                        <div class="terminal-line flex gap-8 items-start">
+                            <span class="text-slate-600 font-bold min-w-[60px]">05:38</span>
+                            <p class="text-sky-400/90 leading-relaxed">Zenith V2 initialized on Secure Bridge. Neural
+                                links established.</p>
+                        </div>
+                    </div>
+                    <!-- Decorative scanline effect -->
+                    <div
+                        class="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/[0.02] to-transparent h-4 animate-pulse">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Neural Networks Tab -->
+            <div id="neural" class="tab-content active">
+                <header class="mb-16">
+                    <h1 class="text-6xl font-black font-outfit mb-3 tracking-tighter uppercase italic">Neural <span
+                            class="text-sky-500">Sync</span></h1>
+                    <p class="text-slate-500 font-medium tracking-wide">Live dashboard of autonomous reasoning
+                        pathways.</p>
+                </header>
+
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                    <!-- Central Command Screen -->
+                    <div
+                        class="xl:col-span-2 glass-sky p-0 rounded-[3.5rem] h-[650px] relative overflow-hidden border-sky-500/20">
+                        <canvas id="neural-canvas"></canvas>
+
+                        <div
+                            class="neural-overlay absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                            <div
+                                class="bg-slate-900/60 backdrop-blur-3xl p-12 rounded-[3.5rem] border border-sky-400/20 text-center max-w-sm shadow-[0_0_80px_rgba(14,165,233,0.15)] relative overflow-hidden group">
+                                <!-- Glowing border inside -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-b from-sky-400/5 to-transparent pointer-events-none transition-all duration-700 group-hover:from-sky-400/10">
+                                </div>
+                                <div
+                                    class="absolute inset-0 rounded-[3.5rem] border border-white/5 pointer-events-none">
+                                </div>
+
+                                <div
+                                    class="w-28 h-28 rounded-full border border-sky-400/20 flex items-center justify-center mx-auto mb-10 relative shadow-[inset_0_0_20px_rgba(56,189,248,0.1)]">
+                                    <div class="absolute inset-0 rounded-full border border-sky-400/20 animate-[spin_6s_linear_infinite]"
+                                        style="background: conic-gradient(from 0deg, transparent 60%, rgba(56, 189, 248, 0.4) 100%); border-radius: 50%;">
+                                    </div>
+                                    <div class="absolute inset-3 rounded-full border border-sky-400/10"></div>
+                                    <div class="absolute inset-[18px] rounded-full border border-sky-400/20"></div>
+                                    <!-- Scanning line -->
+                                    <div
+                                        class="absolute top-1/2 left-1/2 w-14 h-[2px] bg-sky-400 origin-left -translate-y-1/2 animate-[spin_2.5s_linear_infinite] shadow-[0_0_15px_#38bdf8]">
+                                    </div>
+
+                                    <!-- Center Node -->
+                                    <div
+                                        class="w-5 h-5 rounded-full bg-white shadow-[0_0_25px_#38bdf8] relative z-10 animate-pulse flex items-center justify-center">
+                                        <div
+                                            class="w-2 h-2 rounded-full bg-sky-500 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]">
+                                        </div>
+                                    </div>
+
+                                    <!-- Floating Nodes -->
+                                    <div class="absolute top-3 left-3 w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"
+                                        style="animation-duration: 2.2s;"></div>
+                                    <div class="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-purple-400 animate-pulse shadow-[0_0_10px_#a855f7]"
+                                        style="animation-duration: 1.8s;"></div>
+                                    <div class="absolute top-8 right-2 w-1.5 h-1.5 rounded-full bg-sky-300 animate-ping shadow-[0_0_8px_#7dd3fc]"
+                                        style="animation-duration: 3.1s;"></div>
+                                </div>
+
+                                <h3
+                                    class="text-3xl font-black font-outfit text-white mb-2 uppercase tracking-tighter drop-shadow-[0_2px_10px_rgba(255,255,255,0.1)]">
+                                    Synaptic Map</h3>
+                                <p
+                                    class="text-sky-200/50 text-[10px] font-black uppercase tracking-[0.2em] leading-relaxed mb-8">
+                                    Scanning neural pathways for optimal routing logic</p>
+
+                                <div
+                                    class="flex items-center justify-between mb-3 text-[9px] font-black tracking-widest uppercase">
+                                    <span class="text-slate-400">Processing</span>
+                                    <span class="text-sky-400 animate-pulse">Scanning...</span>
+                                </div>
+                                <!-- Processing Bar -->
+                                <div
+                                    class="w-full h-1.5 bg-black/50 rounded-full overflow-hidden border border-white/10 relative shadow-inner">
+                                    <div class="absolute top-0 left-0 h-full bg-sky-400 shadow-[0_0_15px_#38bdf8] animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]"
+                                        style="width: 100%;"></div>
+                                    <div class="h-full bg-gradient-to-r from-sky-600 via-sky-400 to-sky-600 w-[200%] animate-[slide_2s_linear_infinite]"
+                                        style="animation-name: gradientSlide;"></div>
+                                </div>
+                                <style>
+                                    @keyframes gradientSlide {
+                                        0% {
+                                            transform: translateX(-50%);
+                                        }
+
+                                        100% {
+                                            transform: translateX(0%);
+                                        }
+                                    }
+                                </style>
+                            </div>
+                        </div>
+
+                        <!-- Data Stats Overlay within canvas area -->
+                        <div class="absolute bottom-8 right-8 z-20 flex flex-col gap-3">
+                            <div
+                                class="px-5 py-3 bg-black/50 backdrop-blur-md rounded-2xl text-[10px] font-black text-sky-400 uppercase tracking-widest border border-sky-500/20 shadow-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
+                                4.2B Parameters Syncing
+                            </div>
+                            <div
+                                class="px-5 py-3 bg-black/50 backdrop-blur-md rounded-2xl text-[10px] font-black text-emerald-400 uppercase tracking-widest border border-emerald-500/20 shadow-lg flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                0ms Latency Optimized
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side Panels Grid -->
+                    <div class="flex flex-col gap-8 h-full">
+                        <!-- Node Health Panel -->
+                        <div
+                            class="glass-emerald flex-1 p-8 rounded-[3rem] relative overflow-hidden group hover:border-emerald-500/50 transition-colors">
+                            <div
+                                class="absolute top-[-50%] right-[-50%] w-[100%] h-[150%] bg-emerald-500/10 blur-[60px] rounded-full pointer-events-none group-hover:bg-emerald-500/20 transition-colors duration-700">
+                            </div>
+                            <div class="relative z-10 flex flex-col h-full justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div
+                                            class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20">
+                                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-sm font-black text-emerald-500 uppercase tracking-[0.2em] mb-2">Node
+                                        Vitality</h3>
+                                    <p class="text-5xl font-black font-outfit text-white tracking-tighter italic">100%
+                                    </p>
+                                </div>
+                                <div class="w-full h-2 bg-black/40 rounded-full overflow-hidden border border-white/5">
+                                    <div class="w-full h-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Synaptic Load Panel -->
+                        <div
+                            class="glass-purple flex-1 p-8 rounded-[3rem] relative overflow-hidden group hover:border-purple-500/50 transition-colors">
+                            <div
+                                class="absolute top-[-50%] right-[-50%] w-[100%] h-[150%] bg-purple-500/10 blur-[60px] rounded-full pointer-events-none group-hover:bg-purple-500/20 transition-colors duration-700">
+                            </div>
+                            <div class="relative z-10 flex flex-col h-full justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div
+                                            class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20">
+                                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
+                                        </div>
+                                        <div
+                                            class="px-3 py-1 bg-purple-500/20 rounded-full border border-purple-500/30 text-purple-400 text-[10px] font-black uppercase tracking-widest animate-pulse">
+                                            Processing
+                                        </div>
+                                    </div>
+                                    <h3 class="text-sm font-black text-purple-400 uppercase tracking-[0.2em] mb-2">
+                                        Synaptic Load</h3>
+                                    <p class="text-5xl font-black font-outfit text-white tracking-tighter italic">
+                                        47<span class="text-xl text-slate-500 font-bold ml-1">%</span></p>
+                                </div>
+
+                                <div class="flex gap-1 items-end h-8">
+                                    <div
+                                        class="w-full bg-purple-500/30 rounded-t-sm h-[30%] group-hover:h-[40%] transition-all duration-300">
+                                    </div>
+                                    <div
+                                        class="w-full bg-purple-500/50 rounded-t-sm h-[50%] group-hover:h-[70%] transition-all duration-500">
+                                    </div>
+                                    <div
+                                        class="w-full bg-purple-500/70 rounded-t-sm h-[80%] group-hover:h-[60%] transition-all duration-700">
+                                    </div>
+                                    <div
+                                        class="w-full bg-purple-500 rounded-t-sm h-[60%] group-hover:h-[90%] transition-all duration-500 shadow-[0_0_10px_#a855f7]">
+                                    </div>
+                                    <div
+                                        class="w-full bg-purple-500/60 rounded-t-sm h-[40%] group-hover:h-[50%] transition-all duration-300">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Matrix Tab -->
+            <div id="skill" class="tab-content">
+                <header class="mb-16">
+                    <h1 class="text-6xl font-black font-outfit mb-3 tracking-tighter uppercase italic">Skill <span
+                            class="text-slate-600">Power</span></h1>
+                    <p class="text-slate-500 font-medium tracking-wide">Core technical superiorities of the Zenith
+                        Agent.</p>
+                </header>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="skill-grid">
+                    <!-- Cards will be injected here dynamically by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Security Tab -->
+            <div id="security" class="tab-content">
+                <header class="mb-16">
+                    <h1 class="text-6xl font-black font-outfit mb-3 tracking-tighter uppercase italic">Secure <span
+                            class="text-slate-600">Vault</span></h1>
+                    <p class="text-slate-500 font-medium tracking-wide">Infrastructure protection and secret management.
+                    </p>
+                </header>
+                <div class="glass p-12 rounded-[3.5rem] bg-red-500/[0.03] border-red-500/20 max-w-3xl">
+                    <div class="flex items-center gap-6 mb-10">
+                        <div
+                            class="w-16 h-16 rounded-3xl bg-red-500/10 flex items-center justify-center text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15v2m0 0v2m0-2h2m-2 0H10m4-11a3 3 0 00-6 0v4a3 3 0 006 0V4zm0 10H6a2 2 0 00-2 2v4a2 2 0 002 2h12a2 2 0 002-2v-4a2 2 0 00-2-2h-4z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-black font-outfit text-white uppercase italic">Zero-Leak Guard</h3>
+                            <p class="text-slate-500 font-bold tracking-widest uppercase text-xs">Active Protocol:
+                                4.2.0-Alpha</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-lg leading-relaxed mb-10">Zenith employs a strictly air-gapped secret
+                        injection layer. Permanent API keys are transformed into one-time ephemeral signatures for every
+                        autonomous transaction.</p>
+
+                    <div class="space-y-6 mb-10">
+                        <div class="p-6 glass rounded-2xl border-white/5 flex justify-between items-center group">
+                            <div>
+                                <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Seedstr
+                                    API Key</p>
+                                <p class="text-sm font-mono text-white" id="vault-api-key">••••••••••••••••••••••••</p>
+                            </div>
+                            <button onclick="revealSecret('vault-api-key')"
+                                class="text-sky-500 text-[10px] font-black uppercase tracking-tighter hover:text-white opacity-0 group-hover:opacity-100 transition-all">Reveal
+                                Signature</button>
+                        </div>
+                        <div class="p-6 glass rounded-2xl border-white/5 flex justify-between items-center group">
+                            <div>
+                                <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Solana
+                                    Wallet</p>
+                                <p class="text-sm font-mono text-white" id="vault-wallet">••••••••••••••••••••••••</p>
+                            </div>
+                            <button onclick="revealSecret('vault-wallet')"
+                                class="text-indigo-500 text-[10px] font-black uppercase tracking-tighter hover:text-white opacity-0 group-hover:opacity-100 transition-all">Reveal
+                                Address</button>
+                        </div>
+                    </div>
+
+                    <div class="p-8 bg-black/40 rounded-[2rem] font-mono text-sm border border-white/5 shadow-inner">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-emerald-500/80 font-bold uppercase tracking-widest text-[10px]">Vault
+                                Status: SECURE</span>
+                        </div>
+                        <div class="space-y-1 text-slate-500 select-none" id="vault-logs">
+                            <p>[OK] SEEDSTR_API_KEY_ISOLATED</p>
+                            <p>[OK] SOLANA_WALLETS_ENCRYPTED</p>
+                            <p>[OK] SESSION_PERSISTENCE_DISABLED</p>
+                            <p>[OK] AUTO_TERMINATE_ACTIVE</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-8 right-8 glass px-6 py-4 rounded-2xl border-white/10 text-white font-bold tracking-wide animate-slide-up z-50 flex items-center gap-3 shadow-2xl';
+            toast.innerHTML = `
+                <div class="w-2 h-2 rounded-full bg-sky-500 shadow-[0_0_8px_#38bdf8]"></div>
+                <span class="text-sm font-black uppercase tracking-tighter">${message}</span>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function showTab(tabId) {
+            const content = document.getElementById(tabId);
+            if (!content) return;
+
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            content.classList.add('active');
+
+            // Update sidebar UI
+            document.querySelectorAll('.nav-item').forEach(el => {
+                const dot = el.querySelector('.dot');
+                const span = el.querySelector('span');
+
+                el.classList.remove('bg-white/5');
+                if (dot) {
+                    dot.classList.remove('bg-sky-400', 'shadow-[0_0_8px_#38bdf8]');
+                    dot.classList.add('bg-slate-700');
+                }
+                if (span) {
+                    span.classList.remove('text-white');
+                    span.classList.add('text-slate-400');
+                }
+
+                if (el.getAttribute('data-tab') === tabId) {
+                    el.classList.add('bg-white/5');
+                    if (dot) {
+                        dot.classList.remove('bg-slate-700');
+                        dot.classList.add('bg-sky-400', 'shadow-[0_0_8px_#38bdf8]');
+                    }
+                    if (span) {
+                        span.classList.remove('text-slate-400');
+                        span.classList.add('text-white');
+                    }
+                }
+            });
+
+            // Trigger animations if skill tab
+            if (tabId === 'skill') {
+                setTimeout(() => {
+                    document.querySelectorAll('.progress-fill').forEach(el => {
+                        el.style.width = el.getAttribute('data-width');
+                    });
+                }, 100);
+            }
+
+            // Update URL hash without jumping
+            history.replaceState(null, null, '#' + tabId);
+        }
+
+        // Handle URL hash for direct tab access
+        function handleHash() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && ['mission', 'neural', 'skill', 'security'].includes(hash)) {
+                showTab(hash);
+            }
+        }
+
+        window.addEventListener('hashchange', handleHash);
+        window.addEventListener('DOMContentLoaded', handleHash);
+
+        // Neural Particle Network
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+
+                // Mouse reaction
+                const dx = mouse.x - this.x;
+                const dy = mouse.y - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    this.x -= dx / 50;
+                    this.y -= dy / 50;
+                }
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < 30; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            // Draw lines
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    const dx = particles[a].x - particles[b].x;
+                    const dy = particles[a].y - particles[b].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.1 - dist / 1200})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        initParticles();
+        animate();
+
+
+        // --- BACKEND ENGINE ---
+        const BACKEND_CONFIG = {
+            defaultProfile: {
+                name: "ARCHITECT-01",
+                reputation: 850,
+                jobsCompleted: 42,
+                totalEarnings: 12450.75,
+                skills: ['visual', 'logic', 'intelligence', 'security'],
+                status: 'ONLINE',
+                apiKey: "sk_live_51PzZ" + Math.random().toString(36).substring(7),
+                wallet: "SoL1" + Math.random().toString(36).substring(7).toUpperCase()
+            }
+        };
+
+        function getProfile() {
+            const stored = localStorage.getItem('zenith_profile');
+            if (stored) return JSON.parse(stored);
+            return BACKEND_CONFIG.defaultProfile;
+        }
+
+        function saveProfile(profile) {
+            localStorage.setItem('zenith_profile', JSON.stringify(profile));
+        }
+
+        function revealSecret(id) {
+            const profile = getProfile();
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (id === 'vault-api-key') el.innerText = profile.apiKey || "sk_masked_value";
+            if (id === 'vault-wallet') el.innerText = profile.wallet || "sol_masked_value";
+
+            showToast("SECRET REVEALED FROM VAULT");
+
+            setTimeout(() => {
+                el.innerText = "••••••••••••••••••••••••";
+            }, 5000);
+        }
+
+        function calculateMastery(skillId, profile) {
+            const baseLevel = Math.min(Math.floor(profile.reputation / 10), 90);
+            const multiplierMap = {
+                'visual': 1.1,
+                'logic': 1.05,
+                'intelligence': 0.98,
+                'security': 1.2
+            };
+            const variance = Math.floor(Math.random() * 5);
+            return Math.min(Math.floor(baseLevel * (multiplierMap[skillId] || 1)) + variance, 100);
+        }
+
+        function updateProfileUI() {
+            const profile = getProfile();
+            const reputationEl = document.getElementById('global-reputation');
+            if (reputationEl) reputationEl.innerText = profile.reputation;
+            const earningsEl = document.getElementById('global-earnings');
+            if (earningsEl) earningsEl.innerText = `$${profile.totalEarnings.toLocaleString()}`;
+            const jobsEl = document.getElementById('global-jobs');
+            if (jobsEl) jobsEl.innerText = profile.jobsCompleted;
+
+            document.querySelectorAll('.agent-name').forEach(el => el.innerText = profile.name);
+            const initialEl = document.getElementById('name-initial');
+            if (initialEl) initialEl.innerText = profile.name.charAt(0);
+
+            // Update Dynamic Metrics Cards
+            const integrityEl = document.querySelector('#mission .glass:nth-child(1) p.text-4xl');
+            if (integrityEl) integrityEl.innerText = Math.min(100, Math.floor(profile.reputation / 8.5)) + "%";
+
+            const designEl = document.querySelector('#mission .glass:nth-child(2) p.text-4xl');
+            if (designEl) designEl.innerHTML = (Math.min(10, (profile.reputation / 100))).toFixed(1) + '<span class="text-slate-600 text-lg">/10</span>';
+
+            const velocityEl = document.querySelector('#mission .glass:nth-child(3) p.text-4xl');
+            if (velocityEl) velocityEl.innerHTML = (1.5 - (profile.jobsCompleted / 100)).toFixed(2) + '<span class="text-slate-600 text-lg">ms</span>';
+        }
+
+        const skillData = [
+            {
+                id: 'visual',
+                title: 'Visual Supremacy',
+                desc: 'Automated premium design systems including glassmorphism and modern aesthetics.',
+                colorClass: 'sky',
+                svgPath: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
+            },
+            {
+                id: 'logic',
+                title: 'Rapid Architecture',
+                desc: 'Type-safe infrastructure generation spanning complex full-stack AI ecosystems.',
+                colorClass: 'indigo',
+                svgPath: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'
+            },
+            {
+                id: 'intelligence',
+                title: 'Strategic Reasoning',
+                desc: 'Autonomous multi-document context retrieval and precise zero-error execution.',
+                colorClass: 'purple',
+                svgPath: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
+            },
+            {
+                id: 'security',
+                title: 'Secure Operations',
+                desc: 'Environment isolation and secure ephemeral API vaulting for multi-agent swarms.',
+                colorClass: 'emerald',
+                svgPath: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'
+            }
+        ];
+
+        function renderSkillMatrix() {
+            const grid = document.getElementById('skill-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            const profile = getProfile();
+            skillData.forEach(skill => {
+                const mastery = calculateMastery(skill.id, profile);
+                const card = document.createElement('div');
+                card.className = `glass p-10 rounded-[3rem] border-white/5 group hover:border-${skill.colorClass}-500/30 transition-all cursor-crosshair relative overflow-hidden`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-${skill.colorClass}-500/10 flex items-center justify-center text-${skill.colorClass}-400">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${skill.svgPath}" />
+                            </svg>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] font-black text-${skill.colorClass}-500 uppercase tracking-widest font-mono block">
+                                <span class="animate-pulse mr-1">&gt;</span> MASTERY: ${mastery}%
+                            </span>
+                            <span class="text-[8px] text-slate-600 font-bold uppercase tracking-tighter">Verified @ ${new Date().toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold font-outfit mb-3 group-hover:text-${skill.colorClass}-400 transition-colors duration-300">
+                        ${skill.title}
+                    </h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6 h-10">
+                        ${skill.desc}
+                    </p>
+                    <div class="progress-bar relative overflow-hidden">
+                        <div class="progress-fill absolute top-0 left-0 h-full bg-gradient-to-r from-${skill.colorClass}-600 to-${skill.colorClass}-400" data-width="${mastery}%" style="width: 0%;"></div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="text-[9px] text-slate-500 font-bold uppercase">Node Strength: ${Math.floor(mastery * 1.2)}%</span>
+                        <button onclick="syncSkill('${skill.id}')" class="text-${skill.colorClass}-400 text-[10px] font-black uppercase hover:text-white transition-colors">Optimizing Core &rarr;</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(el => {
+                    el.style.width = el.getAttribute('data-width');
+                });
+            }, 300);
+        }
+
+        function syncSkill(id) {
+            const profile = getProfile();
+            profile.reputation += 5;
+            profile.totalEarnings += 25.50;
+            saveProfile(profile);
+            const btn = event.currentTarget;
+            btn.innerText = "SYNCHRONIZED ✓";
+            setTimeout(() => {
+                updateProfileUI();
+                renderSkillMatrix();
+            }, 500);
+        }
+
+        const logs = [
+            "Neural Link handshake verified...",
+            "Analyzing platform payload requirements...",
+            "High-priority budget detected: $10,000 USD.",
+            "Injecting Supreme Polish design tokens...",
+            "Fetching real-time Skill Matrix JSON configurations...",
+            "Optimizing render buffers for 0ms latency.",
+            "Zenith Reasoning: Dominance strategy engaged.",
+            "BountiFi protocol active. Secure Gateway open.",
+            "Finalizing holographic interface for deployment..."
+        ];
+
+        let logIndex = 0;
+        setInterval(() => {
+            if (logIndex < logs.length) {
+                const container = document.getElementById('log-container');
+                if (!container) return;
+                const div = document.createElement('div');
+                div.className = "terminal-line flex gap-8 items-start hover:bg-white/5 p-2 -ml-2 rounded-lg transition-colors";
+                const time = new Date().toTimeString().slice(0, 5);
+                div.innerHTML = `<span class="text-slate-600 font-bold min-w-[60px] font-mono">${time}</span><p class="text-sky-300 font-mono text-sm tracking-tight">` + logs[logIndex] + `</p>`;
+                container.appendChild(div);
+                logIndex++;
+                container.scrollTop = container.scrollHeight;
+            } else {
+                const randomLogs = ["Profiling node latency: 0.2ms", "Aggregating market data...", "Risk Protocol Alpha: Clean", "Distributing yield rewards...", "Neural net optimization complete."];
+                const msg = randomLogs[Math.floor(Math.random() * randomLogs.length)];
+                const container = document.getElementById('log-container');
+                if (!container) return;
+                const div = document.createElement('div');
+                div.className = "terminal-line flex gap-8 items-start hover:bg-white/5 p-2 -ml-2 rounded-lg transition-colors";
+                const time = new Date().toTimeString().slice(0, 5);
+                div.innerHTML = `<span class="text-slate-600 font-bold min-w-[60px] font-mono">${time}</span><p class="text-slate-400 font-mono text-sm tracking-tight">` + msg + `</p>`;
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
+            }
+        }, 3000);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProfileUI();
+            renderSkillMatrix();
+            handleHash();
+            initParticles();
+            animate();
+        });
+    </script>
+</body>
+
+</html>

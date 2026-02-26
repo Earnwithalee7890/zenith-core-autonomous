@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seedstr | Zenith AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            overflow: hidden;
+        }
+
+        .font-outfit {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-sky {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .glass-purple {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .glass-emerald {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .glass-pink {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(15, 23, 42, 0.7));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(236, 72, 153, 0.15);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes zenithPulse {
+
+            0%,
+            100% {
+                opacity: 0.1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.2;
+                transform: scale(1.1);
+            }
+        }
+
+        .bg-pulse {
+            animation: zenithPulse 10s infinite ease-in-out;
+            will-change: transform, opacity;
+        }
+
+        /* Splash Screen */
+        #splash {
+            position: fixed;
+            inset: 0;
+            background: #020617;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s;
+        }
+
+        .splash-fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        @keyframes titleReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+                filter: blur(15px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        .reveal-text {
+            animation: titleReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Loading Overlay */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(12px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 500;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .overlay-active {
+            display: flex !important;
+            opacity: 1 !important;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(56, 189, 248, 0.1);
+            border-top: 4px solid #38bdf8;
+            border-radius: 50%;
+            animation: spin 1s cubic-bezier(0.53, 0.21, 0.29, 0.67) infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen p-4 relative font-inter">
+    <!-- Splash Screen -->
+    <div id="splash">
+        <div class="text-center">
+            <div class="mb-8 flex justify-center">
+                <img src="zenith_logo.png" alt="Zenith"
+                    class="w-24 h-24 rounded-[2rem] shadow-[0_0_60px_rgba(56,189,248,0.3)] reveal-text">
+            </div>
+            <h1 class="text-7xl font-black font-outfit text-white tracking-tighter reveal-text uppercase italic"
+                style="animation-delay: 0.3s">
+                Welcome to <span class="gradient-text">Seedstr</span>
+            </h1>
+            <p class="text-slate-500 font-black uppercase tracking-[0.5em] text-[10px] mt-6 reveal-text"
+                style="animation-delay: 0.6s">
+                Initializing Silicon Neural Interface...
+            </p>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner mb-8 shadow-[0_0_30px_rgba(56,189,248,0.2)]"></div>
+        <p id="loading-text" class="text-white font-black tracking-[0.3em] uppercase text-[10px] animate-pulse">
+            Establishing Secure Uplink...</p>
+    </div>
+
+    <!-- Ambient Background -->
+    <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-sky-500/10 blur-[150px] rounded-full bg-pulse"></div>
+    <div class="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-purple-500/10 blur-[150px] rounded-full bg-pulse"
+        style="animation-delay: -5s"></div>
+
+    <!-- Main Access Card -->
+    <div class="w-full max-w-md glass-sky p-12 rounded-[3.5rem] z-10 scale-95 opacity-0 transition-all duration-1000 border-sky-500/20 shadow-[0_0_50px_rgba(14,165,233,0.15)]"
+        id="main-card">
+        <div class="text-center mb-12">
+            <div class="inline-block p-5 bg-sky-500/10 rounded-3xl mb-8 border border-sky-500/20">
+                <img src="zenith_logo.png" alt="Zenith AI" class="w-16 h-16 mx-auto mb-4 rounded-2xl shadow-lg">
+                <div class="text-3xl font-black gradient-text font-outfit italic tracking-tighter uppercase">ZENITH AI
+                </div>
+            </div>
+            <h1 class="text-3xl font-black font-outfit text-white mb-3 uppercase tracking-tight">Access <span
+                    class="text-slate-600 italic">Portal</span></h1>
+            <p class="text-slate-500 font-medium text-sm tracking-wide">Establish a neural link to the Seedstr Network.
+            </p>
+        </div>
+
+        <!-- Auth Form -->
+        <form class="space-y-5 mb-10" onsubmit="handleLogin(event, 'Email Link')">
+            <div>
+                <label class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3 ml-1">Command
+                    Identity</label>
+                <input type="email" required placeholder="architect@zenith.network"
+                    class="w-full bg-black/40 border border-white/5 rounded-2xl p-4 text-white placeholder-slate-800 focus:outline-none focus:border-sky-500/50 transition-all text-sm font-bold tracking-tight">
+            </div>
+
+            <button type="submit"
+                class="w-full bg-white text-slate-950 font-black p-5 rounded-2xl hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-widest text-[11px] shadow-xl">
+                Initialize System Access
+            </button>
+        </form>
+
+        <div class="relative my-12">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-white/5"></div>
+            </div>
+            <div class="relative flex justify-center text-[9px] uppercase font-black tracking-[0.3em]"><span
+                    class="bg-[#020617] px-6 text-slate-600">Secure Protocol Bridge</span></div>
+        </div>
+
+        <!-- Social/Web3 -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <button onclick="handleLogin(null, 'Google Neural')"
+                class="flex items-center justify-center gap-3 bg-white/5 border border-white/5 p-4 rounded-2xl text-white text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all">
+                Google
+            </button>
+            <button onclick="handleLogin(null, 'GitHub Cloud')"
+                class="flex items-center justify-center gap-3 bg-white/5 border border-white/5 p-4 rounded-2xl text-white text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all">
+                GitHub
+            </button>
+        </div>
+
+        <button onclick="handleLogin(null, 'Solana Mainnet')"
+            class="w-full flex items-center justify-center gap-4 bg-gradient-to-r from-sky-500/10 to-purple-500/10 border border-sky-400/20 p-5 rounded-[2.5rem] text-white font-black transition-all duration-500 group hover:scale-[1.02] uppercase tracking-widest text-[11px] shadow-lg">
+            <svg width="20" height="20" viewBox="0 0 387 386" fill="none"
+                class="group-hover:rotate-12 transition-transform">
+                <path d="M125.688 238.25L0 126.312L23.4375 0L149.125 111.938L125.688 238.25Z" fill="#29E1A5" />
+                <path d="M261.312 238.25L135.625 126.312L159.062 0L284.75 111.938L261.312 238.25Z" fill="#29E1A5" />
+                <path d="M387 238.25L261.312 126.312L284.75 0L386.965 106.666L387 238.25Z" fill="#29E1A5" />
+                <path d="M125.688 385.938L0 274L23.4375 147.688L149.125 259.625L125.688 385.938Z" fill="#29E1A5" />
+                <path d="M261.312 385.938L135.625 274L159.062 147.688L284.75 259.625L261.312 385.938Z" fill="#29E1A5" />
+                <path d="M387 385.938L261.312 274L284.75 147.688L386.965 254.354L387 385.938Z" fill="#29E1A5" />
+            </svg>
+            Solana Neural Link
+        </button>
+
+        <p class="text-center text-slate-700 text-[9px] mt-12 font-black uppercase tracking-[0.3em] leading-loose">
+            Agentic Interface v2.0 <br>
+            <span class="text-slate-800">Zenith Neural Core Engaged</span>
+        </p>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('splash').classList.add('splash-fade-out');
+                const card = document.getElementById('main-card');
+                card.classList.remove('opacity-0', 'scale-95');
+                card.classList.add('opacity-1', 'scale-100');
+            }, 3000);
+        });
+
+        function handleLogin(e, method) {
+            if (e) e.preventDefault();
+            const overlay = document.getElementById('loading-overlay');
+            const text = document.getElementById('loading-text');
+            overlay.classList.add('overlay-active');
+            text.innerText = `Authorizing via ${method}...`;
+
+            setTimeout(() => {
+                text.innerText = "Synchronizing Neural Harmonics...";
+                setTimeout(() => {
+                    text.innerText = "Access Granted. Welcome Architect.";
+                    setTimeout(() => {
+                        window.location.href = 'zenith_showcase.html';
+                    }, 800);
+                }, 1200);
+            }, 1200);
+        }
+    </script>
+</body>
+
+</html>
