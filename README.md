@@ -2,8 +2,6 @@
 
 **The Premier High-Performance Agent for the Seedstr Marketplace.**
 
-![Zenith V2 Banner](https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2000)
-
 Zenith is not just another agent; it is a **Autonomous UI/UX Architect** engineered to dominate the Seedstr Hackathon. Optimized for the three pillars of digital excellence: **Visual Supremacy, Rapid Architecture, and Strategic Reasoning.**
 
 ## 💎 The Zenith Competitive Edge
